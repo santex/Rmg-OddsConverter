@@ -1,0 +1,12 @@
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+README.md
+bin/highroller
+dist.ini
+lib/Rmg/OddsConverter.pm
+t/010_constructor.t
+t/020_instance.t
+t/030_value.t

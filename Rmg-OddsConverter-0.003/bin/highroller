@@ -1,0 +1,52 @@
+  #!/usr/bin/perl
+
+  use strict;
+  use feature qw( say );
+  use Data::Dumper;
+  use Finance::YahooQuote;
+  use Rmg::OddsConverter;
+
+  push @ARGV,"AAPL" unless($ARGV[0]);
+
+
+  my $p = rand(1);
+  my $m = 0;
+  my $oc = undef;
+  say "@"x30;
+
+foreach(@ARGV){
+
+  my $cmd = 'yahooquote --verbose '.$_.' | egrep -i "(^LAST:|^52)" | '.
+            'tr -d " " | sed "s/52-WeekRange://" | sed "s/Last://"| tr "-" " "';
+  my @highroller = split("\n| ",`$cmd`);
+
+  $oc = Rmg::OddsConverter->new( probability => $p );
+
+  say sprintf("%s %s %s","@"x10,"rand prop 0..1","@"x10);
+  say "Contract:".$_;
+  say "Last:$highroller[0]";
+  say "rand(1) = $p";
+  say "decimal=" . $oc->decimal;
+  say "fractional=" . $oc->fractional;
+  say "probability=" . $oc->probability;
+  say "roi=" . $oc->roi;
+  say "monte=".$oc->monte($p,$_);
+  say "\n"x3;
+
+  say sprintf("%s %s %s","@"x10,"LAST - 52WeekLow","@"x10);
+  $m = $highroller[0]-$highroller[1];
+  say "new from (LAST - 52WeekLow) ($m)\$";
+  say "decimal=" . $oc->decimal;
+  say "fractional=" . $oc->fractional;
+  say "probability=" . $oc->probability;
+  say "roi=" . $oc->roi;
+  say  "monte=".$oc->monte($m,$_);
+
+}
+
+
+
+  BEGIN{
+      printf "%s", "\n"x3;
+  }
+1;
