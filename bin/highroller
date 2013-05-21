@@ -40,6 +40,8 @@ foreach(@ARGV){
   say "fractional=" . $oc->fractional;
   say "probability=" . $oc->probability;
   say "roi=" . $oc->roi;
+  say "LastPrice-52weekLow=".$m;
+  say Dumper @highroller;
   say  "monte=".$oc->monte($m,$_);
 
 }

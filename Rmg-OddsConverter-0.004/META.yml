@@ -20,4 +20,4 @@ requires:
   Scalar::Util: 0
   strict: 0
   vars: 0
-version: 0.003
+version: 0.004
